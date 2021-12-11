@@ -269,7 +269,7 @@ class _SplashScreenState extends State<SplashScreen>{
     Colors.red,
   ];
 
-  static const colorizeTextStyle = TextStyle(:wq
+  static const colorizeTextStyle = TextStyle(
 
     fontSize: 30.0,
     fontFamily: 'Horizon',

@@ -87,7 +87,7 @@ class _loginState extends State<login> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height*.7,),
-              Center(child: Text("New to Vivah.com?",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),)),
+              Center(child: Text("New to MarryMe?",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),)),
               SizedBox(height: 5,),
               GestureDetector(
                 child: Container(

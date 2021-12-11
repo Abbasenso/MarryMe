@@ -552,10 +552,10 @@ class _FinalLoginState extends State<FinalLogin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Login with OTP",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
-                  Text("Forgot password",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
-                ],
+                //children: [
+                //  Text("Login with OTP",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
+                //  Text("Forgot password",style: TextStyle(color    : Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
+               // ],
               ),
             ),
             SizedBox(height: 15,),

@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'dart:convert';
 
+import 'package:f_matrimony/home_pages/indibisualmatchingresult.dart';
 import 'package:f_matrimony/home_pages/matchedpeopledetails.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,8 @@ class Matches extends StatefulWidget {
 }
 
 class _MatchesState extends State<Matches> {
+  var shortuserid=[];
+  int click=0;
   String sharedpreferenceuserid;
   String firstname;
   String lastname;
@@ -65,80 +68,135 @@ class _MatchesState extends State<Matches> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   leadingWidth: 100,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(left: 5),
-      //     child: Center(child: Text("Matches",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),)),
-      //   ),
-      // ),
-      body: ListView(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: newmatchesdata!=null?newmatchesdata.length:0,
-                itemBuilder: (BuildContext context,index){
-                  return GestureDetector(
-                    onTap: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*.38,
-                      width: MediaQuery.of(context).size.width*.5,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.red,
-                      ),
-
-                      // child: Card(
-                      //   clipBehavior: Clip.antiAlias,
-                      //   shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.circular(10.0),
-                      //   ),
-                      //   child: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(10.0),
-                      //     child: Column(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       children: [
-                      //         Container(
-                      //             height: MediaQuery.of(context).size.height*.14,
-                      //             width: MediaQuery.of(context).size.width*.36,
-                      //             //color: Colors.red,
-                      //             child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
-                      //         ),
-                      //         SizedBox(height: 2,),
-                      //         Padding(
-                      //           padding: const EdgeInsets.only(left: 5),
-                      //           child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
-                      //         ),
-                      //         Padding(
-                      //           padding: const EdgeInsets.only(left: 5),
-                      //           child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
-                      //         ),
-                      //         Padding(
-                      //           padding: const EdgeInsets.only(left: 5),
-                      //           child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
-                      //         )
-                      //       ],
-                      //     ),
-                      //
-                      //   ),
-                      // ),
-                    ),
-                  );
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leadingWidth: MediaQuery.of(context).size.width*1,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child:newmatchesdata!=null? Center(child: Text(newmatchesdata.length.toString()+" matches for you",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 14),)):Text("Waiting...",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 14)),
+        ),
+      ),
+      body: newmatchesdata!=null?Padding(
+        padding: const EdgeInsets.only(left: 5,right: 5),
+        child: Container(
+          //width: MediaQuery.of(context).size.width*.9,
+          child: ListView.builder(
+            shrinkWrap: true,
+            //scrollDirection: Axis.vertical,
+            itemCount: newmatchesdata!=null?newmatchesdata.length:0,
+            itemBuilder: (BuildContext context,index){
+              return GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
                 },
-              ),
-            ],
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Container(
+                    //height: 100,
+                    //height:MediaQuery.of(context).size.height*.3,
+                    //width: 100,
+                    //width:MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      //                                               color: Colors.red,
+                    ),
+
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                    height: MediaQuery.of(context).size.height*.22,
+                                    width: MediaQuery.of(context).size.width,
+                                    //color: Colors.red,
+                                    child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
+                                ),
+                                // Row(mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     IconButton(
+                                //         onPressed:(){
+                                //           setState(() {
+                                //             //click==0?click=1:click=0;
+                                //             click=1;
+                                //             shortuserid.add(newmatchesdata[index]["user_id"]);
+                                //           });
+                                //           click==1?sharedlogindata.setStringList('shortlisteditems',newmatchesdata): null;
+                                //         },
+                                //         icon: Icon(Icons.favorite,color:click==0?Colors.grey:Colors.red,)
+                                //     ),
+                                //   ],
+                                // )
+                              ],
+                            ),
+                            SizedBox(height: 2,),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text("${newmatchesdata[index]["profession"]}-  ${newmatchesdata[index]["qualification"]}",style: TextStyle(color: Colors.grey,),),
+                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 5,top: 3),
+                            //   child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.black,),),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 5,),
+                            //   child: Text("${newmatchesdata[index]["city"]}- ${newmatchesdata[index]["state"]}",style: TextStyle(color: Colors.black,),),
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5,),
+                              child: Text("${newmatchesdata[index]["religion"]}- ${newmatchesdata[index]["community"]}",style: TextStyle(color: Colors.grey,),),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10,top: 10),
+                              child: GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>IndibisualMatchingResult(newmatchesdata[index])));
+                                },
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height*.03,
+                                  width: MediaQuery.of(context).size.width*.25,
+                                  decoration: BoxDecoration(
+                                      border:Border.all(color: Colors.grey,width: 1),
+                                    borderRadius: BorderRadius.circular(8)
+                                  ),
+                                  child: Center(
+                                    child: Text("Matching",style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold),),
+                                  ),
+                                ),
+                              ),
+
+                            ),
+                            SizedBox(height: 5,)
+
+                          ],
+                        ),
+
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
-        ],
+        ),
+      ):Center(
+        child: CircularProgressIndicator(backgroundColor: Colors.red,
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.yellow),strokeWidth: 5,),
       ),
 
     );

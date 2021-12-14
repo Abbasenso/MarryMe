@@ -21,7 +21,7 @@ class FinalLogin extends StatefulWidget {
 }
 
 class _FinalLoginState extends State<FinalLogin> {
-
+   var userdata;
   //File im;
   final k1= GlobalKey<FormState>();
   String emailorphone="";
@@ -32,9 +32,9 @@ class _FinalLoginState extends State<FinalLogin> {
   //SharedPreference functions
    SharedPreferences sharedlogindata;
   //bool newuser;
-  String currentloginuserid="";
+  //String currentloginuserid="";
   int isornot=0;
-  String haslogindata,userid,fname,lname,gender,email,phone;
+  //String haslogindata,userid,fname,lname,gender,email,phone;
 
   // void check_if_already_login() async {
   //
@@ -141,226 +141,338 @@ class _FinalLoginState extends State<FinalLogin> {
 
 
 
-  var profileimagedata=[];
-  dynamic profileimagedatafetch() async {
-    final url="https://marryme.world/vibaha_backend/profileimagedatafetch.php";
-    var _userData=[];
-    try {
-      final response = await http.get(Uri.parse(url));
-      //debugPrint(response.body);
-      final jsonData = jsonDecode(response.body) as List;
-      // setState(() {
-      //  userData= jsonData;
-      // });
-      _userData=jsonData;
-      //print(_userData);
-      return _userData;
-    }
-    catch (err) {
-      print(err);
-    }
-  }
+  // var profileimagedata=[];
+  // dynamic profileimagedatafetch() async {
+  //   final url="https://marryme.world/vibaha_backend/profileimagedatafetch.php";
+  //   var _userData=[];
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     //debugPrint(response.body);
+  //     final jsonData = jsonDecode(response.body) as List;
+  //     // setState(() {
+  //     //  userData= jsonData;
+  //     // });
+  //     _userData=jsonData;
+  //     //print(_userData);
+  //     return _userData;
+  //   }
+  //   catch (err) {
+  //     print(err);
+  //   }
+  // }
 
 
-  var basicdetailsdata=[];
-  dynamic basicdetailsdatafetch() async {
-    final url="http://marryme.world/vibaha_backend/basicdetailsdatafetch.php";
-    var _userData=[];
-    try {
-      final response = await http.get(Uri.parse(url));
-      //debugPrint(response.body);
-      final jsonData = jsonDecode(response.body) as List;
-      // setState(() {
-      //  userData= jsonData;
-      // });
-      _userData=jsonData;
-      //print(_userData);
-      return _userData;
-    }
-    catch (err) {
-      print(err);
-    }
-  }
+  // var basicdetailsdata=[];
+  // dynamic basicdetailsdatafetch() async {
+  //   final url="http://marryme.world/vibaha_backend/basicdetailsdatafetch.php";
+  //   var _userData=[];
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     //debugPrint(response.body);
+  //     final jsonData = jsonDecode(response.body) as List;
+  //     // setState(() {
+  //     //  userData= jsonData;
+  //     // });
+  //     _userData=jsonData;
+  //     //print(_userData);
+  //     return _userData;
+  //   }
+  //   catch (err) {
+  //     print(err);
+  //   }
+  // }
 
 
 
-  int useridinbasicdetails=0;
-  int useridinprofileimage=0;
-  void isuseridinbasicdetails() {
-    // sharedlogindata = await SharedPreferences.getInstance();
-    // setState(() {
-    //   currentloginuserid=sharedlogindata.getString('userid') ?? '';
-    // });
-    for(var i=0;i<basicdetailsdata.length;i++) {
-      if (basicdetailsdata.isNotEmpty && basicdetailsdata[i]["user_id"]==currentloginuserid) {
-        // setState(() {
-        //   useridinbasicdetails = 1;
-        // });
-        // print("useridinbasicdetails:$useridinbasicdetails");
-        useridinbasicdetails=1;
-        print("useridinbasicdetails:$useridinbasicdetails");
-        break;
+  // int useridinbasicdetails=0;
+  // int useridinprofileimage=0;
+  // void isuseridinbasicdetails() {
+  //   // sharedlogindata = await SharedPreferences.getInstance();
+  //   // setState(() {
+  //   //   currentloginuserid=sharedlogindata.getString('userid') ?? '';
+  //   // });
+  //   for(var i=0;i<basicdetailsdata.length;i++) {
+  //     if (basicdetailsdata.isNotEmpty && basicdetailsdata[i]["user_id"]==currentloginuserid) {
+  //       // setState(() {
+  //       //   useridinbasicdetails = 1;
+  //       // });
+  //       // print("useridinbasicdetails:$useridinbasicdetails");
+  //       useridinbasicdetails=1;
+  //       print("useridinbasicdetails:$useridinbasicdetails");
+  //       break;
+  //     }
+  //     else {
+  //       // setState(() {
+  //       //   useridinbasicdetails = useridinbasicdetails;
+  //       // });
+  //       // print("useridinbasicdetails:$useridinbasicdetails");
+  //       useridinbasicdetails=useridinbasicdetails;
+  //       print("useridinbasicdetails:$useridinbasicdetails");
+  //     }
+  //   }
+  // }
+
+
+  // void isuseridinprofileimage(){
+  //   // sharedlogindata = await SharedPreferences.getInstance();
+  //   // setState(() {
+  //   //   currentloginuserid = sharedlogindata.getString('userid') ?? '';
+  //   // });
+  //   for(var i=0;i<profileimagedata.length;i++) {
+  //   if (profileimagedata.isNotEmpty && profileimagedata[i]["userid"] == currentloginuserid) {
+  //     // setState(() {
+  //     //   useridinprofileimage = 1;
+  //     //   print("useridinprofileimage:$useridinprofileimage");
+  //     // });
+  //     useridinprofileimage=1;
+  //     print("useridinprofileimage:$useridinprofileimage");
+  //     break;
+  //   }
+  //
+  //   else {
+  //     // setState(() {
+  //     //   useridinprofileimage = useridinprofileimage;
+  //     //   print("useridinprofileimage:$useridinprofileimage");
+  //     // });
+  //     useridinprofileimage=useridinprofileimage;
+  //     print("useridinprofileimage:$useridinprofileimage");
+  //   }
+  // }
+  // }
+
+   login()async{
+    if(userdata.isNotEmpty){
+      if(!userdata[0].containsKey("city")|| !userdata[0].containsKey("profilepic")){
+        sharedlogindata=await SharedPreferences.getInstance();
+         setState((){
+          sharedlogindata.setString("userid", "${userdata[0]["user_id"]}");
+          sharedlogindata.setString("firstname", "${userdata[0]["first_name"]}");
+          sharedlogindata.setString("lastname", "${userdata[0]["last_name"]}");
+          sharedlogindata.setString("gender", "${userdata[0]["gender"]}");
+          sharedlogindata.setString("religion", "${userdata[0]["religion"]}");
+          sharedlogindata.setString("community", "${userdata[0]["community"]}");
+          sharedlogindata.setString("emailid", "${userdata[0]["email_id"]}");
+          sharedlogindata.setString("mobileno", "${userdata[0]["mobile_no"]}");
+          sharedlogindata.setString("dob", "${userdata[0]["dob"]}");
+          sharedlogindata.setString("duration", "${userdata[0]["duration"]}");
+          sharedlogindata.setString("status", "${userdata[0]["status"]}");
+          sharedlogindata.setString("username", "${userdata[0]["username"]}");
+          sharedlogindata.setString("password", "${userdata[0]["password"]}");
+          sharedlogindata.setBool('login', false);
+          isornot=1;
+        });
+        Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) =>  Basicdetails1(userdata[0]["user_id"],userdata[0]["email_id"],userdata[0]["first_name"],userdata[0]["last_name"],userdata[0]["religion"],userdata[0]["community"]),
+        ),
+        );
       }
-      else {
-        // setState(() {
-        //   useridinbasicdetails = useridinbasicdetails;
-        // });
-        // print("useridinbasicdetails:$useridinbasicdetails");
-        useridinbasicdetails=useridinbasicdetails;
-        print("useridinbasicdetails:$useridinbasicdetails");
+      else if(userdata[0].containsKey("city") && !userdata[0].containsKey("profilepic")){
+        sharedlogindata=await SharedPreferences.getInstance();
+         setState((){
+          sharedlogindata.setString("userid", "${userdata[0]["user_id"]}");
+          sharedlogindata.setString("firstname", "${userdata[0]["first_name"]}");
+          sharedlogindata.setString("lastname", "${userdata[0]["last_name"]}");
+          sharedlogindata.setString("gender", "${userdata[0]["gender"]}");
+          sharedlogindata.setString("religion", "${userdata[0]["religion"]}");
+          sharedlogindata.setString("community", "${userdata[0]["community"]}");
+          sharedlogindata.setString("emailid", "${userdata[0]["email_id"]}");
+          sharedlogindata.setString("mobileno", "${userdata[0]["mobile_no"]}");
+          sharedlogindata.setString("dob", "${userdata[0]["dob"]}");
+          sharedlogindata.setString("duration", "${userdata[0]["duration"]}");
+          sharedlogindata.setString("status", "${userdata[0]["status"]}");
+          sharedlogindata.setString("username", "${userdata[0]["username"]}");
+          sharedlogindata.setString("password", "${userdata[0]["password"]}");
+          sharedlogindata.setBool('login', false);
+          isornot=1;
+        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>  imageUpload(userdata[0]["user_id"]),
+          ),
+        );
       }
-    }
-  }
-
-
-  void isuseridinprofileimage(){
-    // sharedlogindata = await SharedPreferences.getInstance();
-    // setState(() {
-    //   currentloginuserid = sharedlogindata.getString('userid') ?? '';
-    // });
-    for(var i=0;i<profileimagedata.length;i++) {
-    if (profileimagedata.isNotEmpty && profileimagedata[i]["userid"] == currentloginuserid) {
-      // setState(() {
-      //   useridinprofileimage = 1;
-      //   print("useridinprofileimage:$useridinprofileimage");
-      // });
-      useridinprofileimage=1;
-      print("useridinprofileimage:$useridinprofileimage");
-      break;
-    }
-
-    else {
-      // setState(() {
-      //   useridinprofileimage = useridinprofileimage;
-      //   print("useridinprofileimage:$useridinprofileimage");
-      // });
-      useridinprofileimage=useridinprofileimage;
-      print("useridinprofileimage:$useridinprofileimage");
-    }
-  }
-  }
-
-
-
-
-  Future <void> userLogin( a)async{
-    List ud=a;
-    var i;
-    for(i=0;i<ud.length;i++){
-      if(emailorphone=="${ud[i]["username"]}" && password=="${ud[i]["password"]}"){
-
-        // sharedlogindata=await SharedPreferences.getInstance() ;
-        //sharedlogindata.setBool('login', false);
-        //print(sharedlogindata.getBool('login'));
-        // setState(() {
-        //   currentloginuserid="${ud[i]["user_id"]}";
-        // });
-        currentloginuserid="${ud[i]["user_id"]}";
-        print(currentloginuserid);
-         isuseridinbasicdetails();
-         isuseridinprofileimage();
-        if(useridinbasicdetails==0 && useridinprofileimage==0)
-        {
-          sharedlogindata=await SharedPreferences.getInstance();
-          await sharedlogindata.setBool('login', false);
-          setState(() {
-
-          });
-          print(sharedlogindata.getBool('login'));
-          //SharedPreferences.setMockInitialValues({});
-          sharedlogindata.setString('userid', "${ud[i]["user_id"]}");
-          sharedlogindata.setString('emailid', "${ud[i]["email_id"]}");
-          sharedlogindata.setString('firstname', "${ud[i]["first_name"]}");
-          sharedlogindata.setString('lastname', "${ud[i]["last_name"]}");
-          sharedlogindata.setString('gender', "${ud[i]["gender"]}");
-          sharedlogindata.setString('religion', "${ud[i]["religion"]}");
-          sharedlogindata.setString('community', "${ud[i]["community"]}");
-
-          //sharedlogindata.setString('password', password);
-          setState(() {
-            isornot=1;
-          });
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) =>  Basicdetails1(ud[i]["user_id"],ud[i]["email_id"],ud[i]["first_name"],ud[i]["last_name"],ud[i]["religion"],ud[i]["community"]),
+      else{
+        sharedlogindata=await SharedPreferences.getInstance();
+        setState((){
+          sharedlogindata.setString("userid", "${userdata[0]["user_id"]}");
+          sharedlogindata.setString("firstname", "${userdata[0]["first_name"]}");
+          sharedlogindata.setString("lastname", "${userdata[0]["last_name"]}");
+          sharedlogindata.setString("gender", "${userdata[0]["gender"]}");
+          sharedlogindata.setString("religion", "${userdata[0]["religion"]}");
+          sharedlogindata.setString("community", "${userdata[0]["community"]}");
+          sharedlogindata.setString("emailid", "${userdata[0]["email_id"]}");
+          sharedlogindata.setString("mobileno", "${userdata[0]["mobile_no"]}");
+          sharedlogindata.setString("dob", "${userdata[0]["dob"]}");
+          sharedlogindata.setString("duration", "${userdata[0]["duration"]}");
+          sharedlogindata.setString("status", "${userdata[0]["status"]}");
+          sharedlogindata.setString("username", "${userdata[0]["username"]}");
+          sharedlogindata.setString("password", "${userdata[0]["password"]}");
+          sharedlogindata.setString("country", "${userdata[0]["country"]}");
+          sharedlogindata.setString("state", "${userdata[0]["state"]}");
+          sharedlogindata.setString("city", "${userdata[0]["city"]}");
+          sharedlogindata.setString("residencystatus", "${userdata[0]["residency_status"]}");
+          sharedlogindata.setString("maritialstatus", "${userdata[0]["maritialstatus"]}");
+          sharedlogindata.setString("havechildren", "${userdata[0]["have_childrean"]}");
+          sharedlogindata.setString("noofchild", "${userdata[0]["no_of_child"]}");
+          sharedlogindata.setString("diet", "${userdata[0]["diet"]}");
+          sharedlogindata.setString("height", "${userdata[0]["height"]}");
+          sharedlogindata.setString("qualification", "${userdata[0]["qualification"]}");
+          sharedlogindata.setString("collegename", "${userdata[0]["collegename"]}");
+          sharedlogindata.setString("workwith", "${userdata[0]["workwith"]}");
+          sharedlogindata.setString("profession", "${userdata[0]["profession"]}");
+          sharedlogindata.setString("professionaddress", "${userdata[0]["profession_address"]}");
+          sharedlogindata.setString("annualincome", "${userdata[0]["annualincome"]}");
+          sharedlogindata.setString("bodytype", "${userdata[0]["bodytype"]}");
+          sharedlogindata.setString("identitytype", "${userdata[0]["identity_type"]}");
+          sharedlogindata.setString("profilepic", "${userdata[0]["profilepic"]}");
+          sharedlogindata.setBool('login', false);
+          isornot=1;
+        });
+        if(userdata[0]["status"] !='0'){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>  HomePage(),
             ),
           );
         }
-        else if(useridinbasicdetails==1 && useridinprofileimage==0)
-          {
-            sharedlogindata=await SharedPreferences.getInstance() ;
-            await sharedlogindata.setBool('login', false);
-            setState(() {
-
-            });
-            print(sharedlogindata.getBool('login'));
-            //SharedPreferences.setMockInitialValues({});
-            sharedlogindata.setString('userid', "${ud[i]["user_id"]}");
-            sharedlogindata.setString('emailid', "${ud[i]["email_id"]}");
-            sharedlogindata.setString('firstname', "${ud[i]["first_name"]}");
-            sharedlogindata.setString('lastname', "${ud[i]["last_name"]}");
-            sharedlogindata.setString('gender', "${ud[i]["gender"]}");
-            sharedlogindata.setString('religion', "${ud[i]["religion"]}");
-            sharedlogindata.setString('community', "${ud[i]["community"]}");
-            //sharedlogindata.setString('password', password);
-            setState(() {
-              isornot=1;
-            });
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>  imageUpload(ud[i]["user_id"]),
-              ),
-            );
-          }
-        else
-          {
-            sharedlogindata=await SharedPreferences.getInstance() ;
-            await sharedlogindata.setBool('login', false);
-            setState(() {
-
-            });
-            print(sharedlogindata.getBool('login'));
-            //SharedPreferences.setMockInitialValues({});
-            sharedlogindata.setString('userid', "${ud[i]["user_id"]}");
-            sharedlogindata.setString('emailid', "${ud[i]["email_id"]}");
-            sharedlogindata.setString('active',"${ud[i]["status"]}");
-            sharedlogindata.setString('firstname', "${ud[i]["first_name"]}");
-            sharedlogindata.setString('lastname', "${ud[i]["last_name"]}");
-            sharedlogindata.setString('gender', "${ud[i]["gender"]}");
-            sharedlogindata.setString('religion', "${ud[i]["religion"]}");
-            sharedlogindata.setString('community', "${ud[i]["community"]}");
-            //sharedlogindata.setString('password', password);
-            setState(() {
-              isornot=1;
-            });
-            if(ud[i]["status"] !='0'){
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>  HomePage(),
-                ),
-              );
-            }
-            else{
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>  waitForActivation(),
-                ),
-              );
-            }
-
-
-          }
-        break;
-      }
-      else{
-        setState(() {
-          isornot=isornot;
-        });
+        else{
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>  waitForActivation(),
+            ),
+          );
+        }
       }
     }
-  }
+    else{
+            setState(() {
+              isornot=isornot;
+            });
+          }
+    }
+
+
+  // Future <void> userLogin( a)async{
+  //   List ud=a;
+  //   var i;
+  //   for(i=0;i<ud.length;i++){
+  //     if(emailorphone=="${ud[i]["username"]}" && password=="${ud[i]["password"]}"){
+  //
+  //       // sharedlogindata=await SharedPreferences.getInstance() ;
+  //       //sharedlogindata.setBool('login', false);
+  //       //print(sharedlogindata.getBool('login'));
+  //       // setState(() {
+  //       //   currentloginuserid="${ud[i]["user_id"]}";
+  //       // });
+  //       currentloginuserid="${ud[i]["user_id"]}";
+  //       print(currentloginuserid);
+  //        isuseridinbasicdetails();
+  //        isuseridinprofileimage();
+  //       if(useridinbasicdetails==0 && useridinprofileimage==0)
+  //       {
+  //         sharedlogindata=await SharedPreferences.getInstance();
+  //         await sharedlogindata.setBool('login', false);
+  //         setState(() {
+  //
+  //         });
+  //         print(sharedlogindata.getBool('login'));
+  //         //SharedPreferences.setMockInitialValues({});
+  //         sharedlogindata.setString('userid', "${ud[i]["user_id"]}");
+  //         sharedlogindata.setString('emailid', "${ud[i]["email_id"]}");
+  //         sharedlogindata.setString('firstname', "${ud[i]["first_name"]}");
+  //         sharedlogindata.setString('lastname', "${ud[i]["last_name"]}");
+  //         sharedlogindata.setString('gender', "${ud[i]["gender"]}");
+  //         sharedlogindata.setString('religion', "${ud[i]["religion"]}");
+  //         sharedlogindata.setString('community', "${ud[i]["community"]}");
+  //
+  //         //sharedlogindata.setString('password', password);
+  //         setState(() {
+  //           isornot=1;
+  //         });
+  //         Navigator.pushReplacement(context, MaterialPageRoute(
+  //             builder: (context) =>  Basicdetails1(ud[i]["user_id"],ud[i]["email_id"],ud[i]["first_name"],ud[i]["last_name"],ud[i]["religion"],ud[i]["community"]),
+  //           ),
+  //         );
+  //       }
+  //       else if(useridinbasicdetails==1 && useridinprofileimage==0)
+  //         {
+  //           sharedlogindata=await SharedPreferences.getInstance() ;
+  //           await sharedlogindata.setBool('login', false);
+  //           setState(() {
+  //
+  //           });
+  //           print(sharedlogindata.getBool('login'));
+  //           //SharedPreferences.setMockInitialValues({});
+  //           sharedlogindata.setString('userid', "${ud[i]["user_id"]}");
+  //           sharedlogindata.setString('emailid', "${ud[i]["email_id"]}");
+  //           sharedlogindata.setString('firstname', "${ud[i]["first_name"]}");
+  //           sharedlogindata.setString('lastname', "${ud[i]["last_name"]}");
+  //           sharedlogindata.setString('gender', "${ud[i]["gender"]}");
+  //           sharedlogindata.setString('religion', "${ud[i]["religion"]}");
+  //           sharedlogindata.setString('community', "${ud[i]["community"]}");
+  //           //sharedlogindata.setString('password', password);
+  //           setState(() {
+  //             isornot=1;
+  //           });
+  //           Navigator.pushReplacement(
+  //             context,
+  //             MaterialPageRoute(
+  //               builder: (context) =>  imageUpload(ud[i]["user_id"]),
+  //             ),
+  //           );
+  //         }
+  //       else
+  //         {
+  //           sharedlogindata=await SharedPreferences.getInstance() ;
+  //           await sharedlogindata.setBool('login', false);
+  //           setState(() {
+  //
+  //           });
+  //           print(sharedlogindata.getBool('login'));
+  //           //SharedPreferences.setMockInitialValues({});
+  //           sharedlogindata.setString('userid', "${ud[i]["user_id"]}");
+  //           sharedlogindata.setString('emailid', "${ud[i]["email_id"]}");
+  //           sharedlogindata.setString('active',"${ud[i]["status"]}");
+  //           sharedlogindata.setString('firstname', "${ud[i]["first_name"]}");
+  //           sharedlogindata.setString('lastname', "${ud[i]["last_name"]}");
+  //           sharedlogindata.setString('gender', "${ud[i]["gender"]}");
+  //           sharedlogindata.setString('religion', "${ud[i]["religion"]}");
+  //           sharedlogindata.setString('community', "${ud[i]["community"]}");
+  //           //sharedlogindata.setString('password', password);
+  //           setState(() {
+  //             isornot=1;
+  //           });
+  //           if(ud[i]["status"] !='0'){
+  //             Navigator.pushReplacement(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) =>  HomePage(),
+  //               ),
+  //             );
+  //           }
+  //           else{
+  //             Navigator.pushReplacement(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (context) =>  waitForActivation(),
+  //               ),
+  //             );
+  //           }
+  //
+  //
+  //         }
+  //       break;
+  //     }
+  //     else{
+  //       setState(() {
+  //         isornot=isornot;
+  //       });
+  //     }
+  //   }
+  // }
   showSnackbar(){
     if(isornot==1){
       final snackBar1 = SnackBar(
@@ -391,58 +503,58 @@ class _FinalLoginState extends State<FinalLogin> {
   }
 
 
-  var logindata=[];
-  dynamic fetchData() async {
-    final url="http://marryme.world/vibaha_backend/registrationdatafetch.php";
-    var _userData=[];
-    try {
-      final response = await http.get(Uri.parse(url));
-      //debugPrint(response.body);
-      final jsonData = jsonDecode(response.body) as List;
-      // setState(() {
-      //  userData= jsonData;
-      // });
-      _userData=jsonData;
-      //print(_userData);
-      return _userData;
-    }
-    catch (err) {
-      print(err);
-    }
-  }
+  // var logindata=[];
+  // dynamic fetchData() async {
+  //   final url="http://marryme.world/vibaha_backend/registrationdatafetch.php";
+  //   var _userData=[];
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     //debugPrint(response.body);
+  //     final jsonData = jsonDecode(response.body) as List;
+  //     // setState(() {
+  //     //  userData= jsonData;
+  //     // });
+  //     _userData=jsonData;
+  //     //print(_userData);
+  //     return _userData;
+  //   }
+  //   catch (err) {
+  //     print(err);
+  //   }
+  // }
 
-   void initState()  {
-    // TODO: implement initState
-     super.initState();
-
-      fetchData().then((value) {
-      //debugPrint('type-->$value');
-      logindata=value;
-      print("registration:$logindata");
-
-      // do functions requiring value parameter
-    });
-
-     basicdetailsdatafetch().then((value) {
-      //debugPrint('type-->$value');
-      basicdetailsdata=value;
-      print("details: $basicdetailsdata");
-
-      // do functions requiring value parameter
-    });
-
-     profileimagedatafetch().then((value) {
-      //debugPrint('type-->$value');
-      profileimagedata=value;
-      print("image:$profileimagedata");
-
-      // do functions requiring value parameter
-    });
-     //isuseridinbasicdetails();
-     //isuseridinprofileimage();
-
-      //check_if_already_login();
-  }
+  //  void initState()  {
+  //   // TODO: implement initState
+  //    super.initState();
+  //
+  //     fetchData().then((value) {
+  //     //debugPrint('type-->$value');
+  //     logindata=value;
+  //     print("registration:$logindata");
+  //
+  //     // do functions requiring value parameter
+  //   });
+  //
+  //    basicdetailsdatafetch().then((value) {
+  //     //debugPrint('type-->$value');
+  //     basicdetailsdata=value;
+  //     print("details: $basicdetailsdata");
+  //
+  //     // do functions requiring value parameter
+  //   });
+  //
+  //    profileimagedatafetch().then((value) {
+  //     //debugPrint('type-->$value');
+  //     profileimagedata=value;
+  //     print("image:$profileimagedata");
+  //
+  //     // do functions requiring value parameter
+  //   });
+  //    //isuseridinbasicdetails();
+  //    //isuseridinprofileimage();
+  //
+  //     //check_if_already_login();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -552,10 +664,10 @@ class _FinalLoginState extends State<FinalLogin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                //children: [
-                //  Text("Login with OTP",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
-                //  Text("Forgot password",style: TextStyle(color    : Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
-               // ],
+                children: [
+                  Text("Login with OTP",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
+                  Text("Forgot password",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
+                ],
               ),
             ),
             SizedBox(height: 15,),
@@ -563,8 +675,9 @@ class _FinalLoginState extends State<FinalLogin> {
               onTap: ()async {
                if(k1.currentState.validate()){
                  await sendusernamepassword();
-                 await userLogin(logindata);
-                 await showSnackbar();
+                 //await userLogin(logindata);
+                 await login();
+                 showSnackbar();
                }
                return null;
               },
@@ -620,7 +733,7 @@ class _FinalLoginState extends State<FinalLogin> {
   Future sendusernamepassword()  async{
     // url to registration php script
     var APIURL = "https://marryme.world/vibaha_backend/userloginData_sharedData.php";
-    //json maping user entered details
+    //json maping user entered detailsbarnali
 
     Map mapeddate ={
       'username':"$emailorphone",
@@ -630,8 +743,9 @@ class _FinalLoginState extends State<FinalLogin> {
     http.Response reponse = await http.post(Uri.parse(APIURL),body:mapeddate );
     //getting response from php code, here
     var data = jsonDecode(reponse.body.toString());
-    print("DATA: ${data}");
+    print("UserDATA: ${data}");
     setState(() {
+      userdata=data;
     });
   }
 }

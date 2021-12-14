@@ -1,6 +1,8 @@
+// @dart=2.9
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class MatchedPeopleDetails extends StatefulWidget {
@@ -16,6 +18,9 @@ class MatchedPeopleDetails extends StatefulWidget {
 }
 
 class _MatchedPeopleDetailsState extends State<MatchedPeopleDetails> {
+  SharedPreferences sharedlogindata;
+  int click=0;
+  String profileid;
   @override
   Widget build(BuildContext context) {
     var allData=widget.detaildata;
@@ -27,9 +32,23 @@ class _MatchedPeopleDetailsState extends State<MatchedPeopleDetails> {
               Container(
                 height: MediaQuery.of(context).size.height*.25,
                 width: MediaQuery.of(context).size.width,
-                color: Colors.red,
+                //color: Colors.red,
                 child: Image.memory(base64Decode(allData["profilepic"]),fit: BoxFit.cover,),
               ),
+              // Row(mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     IconButton(
+              //         onPressed:(){
+              //           setState(() {
+              //             //click==0?click=1:click=0;
+              //             click=1;
+              //             profileid="${widget.detaildata["user_id"]}";
+              //           });
+              //         },
+              //         icon: Icon(Icons.favorite,color:click==0?Colors.grey:Colors.red,)
+              //     ),
+              //   ],
+              // )
               
             ],
           ),
@@ -311,5 +330,22 @@ class _MatchedPeopleDetailsState extends State<MatchedPeopleDetails> {
       ),
 
     );
+  }
+  Future shortlistedprofilesend()  async{
+    sharedlogindata=await SharedPreferences.getInstance();
+    var APIURL = "https://marryme.world/vibaha_backend/shortlisted_profile_post.php";
+    //json maping user entered details
+
+
+    Map mapeddata ={
+      'user_id':"${sharedlogindata.getString('user_id')}",
+      'profile_id':profileid
+    };
+    //print(mapeddata);
+    //send  data using http post to our php code
+    http.Response reponse = await http.post(Uri.parse(APIURL),body:mapeddata );
+    //getting response from php code, here
+    var data = jsonDecode(reponse.body.toString());
+    print("DATA: ${data}");
   }
 }

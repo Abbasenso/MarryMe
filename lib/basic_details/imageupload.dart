@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:convert';
 import 'package:f_matrimony/home_pages/homepage.dart';
 import 'package:f_matrimony/home_pages/waitforactivation.dart';
@@ -10,6 +11,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 //import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -25,6 +27,7 @@ class imageUpload extends StatefulWidget {
 }
 
 class _imageUploadState extends State<imageUpload> {
+  SharedPreferences sharedlogindata;
   String selector="";
   bool select_value=false;
   bool select_value1=false;
@@ -33,8 +36,8 @@ class _imageUploadState extends State<imageUpload> {
   String radio2="Voter Id";
   String radio3="Driving Licence";
 
-  File? pickImage;
-  File? pickImageNew;
+  File pickImage;
+  File pickImageNew;
   getImageFromCamera()async{
     ImagePicker pick=await ImagePicker();
     final pickedImage=await pick.pickImage(source: ImageSource.camera,maxHeight:600 ,maxWidth: 400,imageQuality: 100,) ;
@@ -148,14 +151,14 @@ class _imageUploadState extends State<imageUpload> {
   String profile_image="";
   convertImage(){
     setState(() {
-      profile_image=base64Encode(pickImage!.readAsBytesSync());
+      profile_image=base64Encode(pickImage.readAsBytesSync());
     });
     print("$profile_image");
   }
   String identity_image="";
   convertImage1(){
     setState(() {
-      identity_image=base64Encode(pickImageNew!.readAsBytesSync());
+      identity_image=base64Encode(pickImageNew.readAsBytesSync());
     });
     print("$identity_image");
   }
@@ -197,12 +200,12 @@ class _imageUploadState extends State<imageUpload> {
                         pickImage==null?
                         Image(image: NetworkImage("https://us.123rf.com/450wm/dvarg/dvarg1204/dvarg120400070/13238023-camera-and-photos-illustration-on-white-background.jpg?ver=6"),)
                             :
-                        Image.file(pickImage!,fit: BoxFit.cover,)
+                        Image.file(pickImage,fit: BoxFit.cover,)
                         :
                         pickImageNew==null?
                         Image(image: NetworkImage("https://us.123rf.com/450wm/dvarg/dvarg1204/dvarg120400070/13238023-camera-and-photos-illustration-on-white-background.jpg?ver=6"),)
                             :
-                            Image.file(pickImageNew!,fit: BoxFit.cover,)
+                            Image.file(pickImageNew,fit: BoxFit.cover,)
               ),
               ListTile(
                 leading: Container(
@@ -403,13 +406,19 @@ class _imageUploadState extends State<imageUpload> {
       floatingActionButton: pickImage==null|| pickImageNew==null?Text(""):FloatingActionButton(
         backgroundColor: Colors.orange,
         child: Icon(Icons.done,color: Colors.white,),
-        onPressed: (){
+        onPressed: ()async{
           if(pickImage!=null && pickImageNew != null){
-            uploadImage();
+            await uploadImage();
+            await setState(() async{
+              sharedlogindata=await SharedPreferences.getInstance();
+              sharedlogindata.setString("identitytype", "$Radio_value");
+              sharedlogindata.setString("profilepic", "$profile_image");
+              sharedlogindata.setBool('login', false);
+            });
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder:
                     (context) =>
-                    waitForActivation()
+                        HomePage()
                 )
             );
           }

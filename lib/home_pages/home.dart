@@ -24,7 +24,10 @@ class _MyHomeState extends State<MyHome> {
   String firstname;
   String lastname;
   String gender;
+  String profilepic;
   var newmatchesdata;
+  var allmatchesdata;
+  var todaymatchesdata;
   SharedPreferences sharedlogindata;
   getuseridfromsharedpreference()async {
     sharedlogindata = await SharedPreferences.getInstance();
@@ -33,63 +36,65 @@ class _MyHomeState extends State<MyHome> {
       firstname=sharedlogindata.getString('firstname') ?? '';
       lastname=sharedlogindata.getString('lastname') ?? '';
       gender=sharedlogindata.getString('gender') ?? '';
+      profilepic=sharedlogindata.getString('profilepic') ?? '';
+
       //password1=logindata.getString('password') ?? '';
     });
     print(sharedpreferenceuserid);
   }
 
-  var profileimagedata;
-   dynamic profileimagedatafetch() async {
-    final url="https://marryme.world/vibaha_backend/profileimagedatafetch.php";
-    var _userData=[];
-    try {
-      final response = await http.get(Uri.parse(url));
-      //debugPrint(response.body);
-      final jsonData = jsonDecode(response.body) as List;
-      // setState(() {
-      //  userData= jsonData;
-      // });
-      _userData=jsonData;
-      print(_userData);
-      return _userData;
-    }
-    catch (err) {
-      print(err);
-    }
-  }
-  String serverimage;
-   matchimageindatabase() {
-    for (var i = 0; i <profileimagedata.length; i++) {
-      if (sharedpreferenceuserid == "${profileimagedata[i]["userid"]}") {
-        setState(() {
-          serverimage = "${profileimagedata[i]["profilepic"]}";
-        });
-        print("serverimage:$serverimage");
-        break;
-      }
-      else {
-        setState(() {
-          serverimage = "";
-        });
-        print("No server image");
-      }
-    }
-  }
+  // var profileimagedata;
+  //  dynamic profileimagedatafetch() async {
+  //   final url="https://marryme.world/vibaha_backend/profileimagedatafetch.php";
+  //   var _userData=[];
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     //debugPrint(response.body);
+  //     final jsonData = jsonDecode(response.body) as List;
+  //     // setState(() {
+  //     //  userData= jsonData;
+  //     // });
+  //     _userData=jsonData;
+  //     print(_userData);
+  //     return _userData;
+  //   }
+  //   catch (err) {
+  //     print(err);
+  //   }
+  // }
+  // String serverimage;
+  //  matchimageindatabase() {
+  //   for (var i = 0; i <profileimagedata.length; i++) {
+  //     if (sharedpreferenceuserid == "${profileimagedata[i]["userid"]}") {
+  //       setState(() {
+  //         serverimage = "${profileimagedata[i]["profilepic"]}";
+  //       });
+  //       print("serverimage:$serverimage");
+  //       break;
+  //     }
+  //     else {
+  //       setState(() {
+  //         serverimage = "";
+  //       });
+  //       print("No server image");
+  //     }
+  //   }
+  // }
 
     void initState() {
       // TODO: implement initState
       super.initState();
-       profileimagedatafetch().then((value) {
-        //debugPrint('type-->$value');
-        profileimagedata = value;
-        print(profileimagedata);
+       // profileimagedatafetch().then((value) {
+       //  //debugPrint('type-->$value');
+       //  profileimagedata = value;
+       //  print(profileimagedata);
         getuseridfromsharedpreference().then((value){
-          matchimageindatabase();
+          //matchimageindatabase();
           newMatches();
           todayMatches();
           allMatches();
         });
-       });
+       //});
     }
     @override
   Widget build(BuildContext context) {
@@ -127,7 +132,7 @@ class _MyHomeState extends State<MyHome> {
                              height: MediaQuery.of(context).size.height*.25,
                              width: MediaQuery.of(context).size.width,
 
-                             child:serverimage!=null?Image.memory(base64Decode(serverimage),fit: BoxFit.cover,):CircularProgressIndicator(color: Colors.blue,)
+                             child:profilepic!=null?Image.memory(base64Decode(profilepic),fit: BoxFit.cover,):CircularProgressIndicator(color: Colors.blue,)
                              //Image.memory(base64Decode(serverimage),fit: BoxFit.contain,)
                              //_image==null?Image.file(widget.pro_im,fit: BoxFit.cover,):Image.file(_image,fit: BoxFit.cover,),
                            ),
@@ -182,28 +187,28 @@ class _MyHomeState extends State<MyHome> {
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.0),
-                                       child:serverimage!=null?Image.memory(base64Decode(serverimage),fit: BoxFit.cover,):Center(
+                                       child:profilepic!=null?Image.memory(base64Decode(profilepic),fit: BoxFit.cover,):Center(
                                          child: CircularProgressIndicator(backgroundColor: Colors.red,
                                         valueColor: new AlwaysStoppedAnimation<Color>(Colors.yellow),strokeWidth: 5,),
                                        )
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  top: 105,
-                                  left: 35,
-                                  child: GestureDetector(
-                                    child: Container(
-                                      height: 25,
-                                      width: 25,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.blue
-                                      ),
-                                      child: Icon(Icons.add,color: Colors.white,),
-                                    ),
-                                  ),
-                                )
+                                // Positioned(
+                                //   top: 105,
+                                //   left: 35,
+                                //   child: GestureDetector(
+                                //     child: Container(
+                                //       height: 25,
+                                //       width: 25,
+                                //       decoration: BoxDecoration(
+                                //         shape: BoxShape.circle,
+                                //         color: Colors.blue
+                                //       ),
+                                //       child: Icon(Icons.add,color: Colors.white,),
+                                //     ),
+                                //   ),
+                                // )
                               ],
                             ),
                             SizedBox(width: 25,),
@@ -216,21 +221,21 @@ class _MyHomeState extends State<MyHome> {
                                 Text(sharedpreferenceuserid!=null?"$sharedpreferenceuserid":"",style: TextStyle(color: Colors.white),),
                                 Text("Account - Free",style: TextStyle(color: Colors.white),),
                                 SizedBox(height: 10,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-
-                                    Text("Edit",style: TextStyle(fontSize:15,color: Colors.blue,fontWeight: FontWeight.bold,decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.solid,decorationColor: Colors.blue,decorationThickness: 2),),
-                                    SizedBox(width: 10,),
-                                    Container(height: 15,width: 1,color: Colors.white,),
-                                    SizedBox(width: 10,),
-                                    // Container(
-                                    //   decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.white),
-                                    //     child: Icon(Icons.edit_outlined,color: Colors.black,size: 15,)),
-                                    Text("Upgrade",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 15,decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.solid,decorationColor: Colors.blue,decorationThickness: 2),)
-                                  ],
-                                )
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   crossAxisAlignment: CrossAxisAlignment.center,
+                                //   children: [
+                                //
+                                //     Text("Edit",style: TextStyle(fontSize:15,color: Colors.blue,fontWeight: FontWeight.bold,decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.solid,decorationColor: Colors.blue,decorationThickness: 2),),
+                                //     SizedBox(width: 10,),
+                                //     Container(height: 15,width: 1,color: Colors.white,),
+                                //     SizedBox(width: 10,),
+                                //     // Container(
+                                //     //   decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.white),
+                                //     //     child: Icon(Icons.edit_outlined,color: Colors.black,size: 15,)),
+                                //     Text("Upgrade",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 15,decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.solid,decorationColor: Colors.blue,decorationThickness: 2),)
+                                //   ],
+                                // )
                               ],
                             )
                         ],
@@ -238,211 +243,223 @@ class _MyHomeState extends State<MyHome> {
                     ],
                        ),
                   ),
-              SizedBox(height: 10,),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(children: [Text("New Matches",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)]),
-              ),
               Container(
-                height: MediaQuery.of(context).size.height*.22,
-                //color: Colors.yellow,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: newmatchesdata!=null?newmatchesdata.length:0,
-                  itemBuilder: (BuildContext context,index){
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 7),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height*.22,
-                          width: MediaQuery.of(context).size.width*.36,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            //color: Colors.red,
-                          ),
-
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: MediaQuery.of(context).size.height*.14,
-                                      width: MediaQuery.of(context).size.width*.36,
-                                      //color: Colors.red,
-                                      child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
-                                    ),
-                                    SizedBox(height: 2,),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
-                                    )
-                                  ],
+                child: allmatchesdata!=null && todaymatchesdata!=null && newmatchesdata!=null?Column(
+                  children: [
+                    SizedBox(height: 10,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(children: [newmatchesdata!=null?Text("New Matches",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),):Text("")]),
+                    ),
+                    newmatchesdata!=null?Container(
+                      height: MediaQuery.of(context).size.height*.25,
+                      //color: Colors.yellow,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: newmatchesdata!=null?newmatchesdata.length:0,
+                        itemBuilder: (BuildContext context,index){
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 7),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
+                              },
+                              child: Container(
+                                //height: MediaQuery.of(context).size.height*.22,
+                                width: MediaQuery.of(context).size.width*.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  //color: Colors.red,
                                 ),
 
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            height: MediaQuery.of(context).size.height*.15,
+                                            width: MediaQuery.of(context).size.width*.4,
+                                            //color: Colors.red,
+                                            child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
+                                        ),
+                                        SizedBox(height: 2,),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
+                                        )
+                                      ],
+                                    ),
+
+                                  ),
+                                ),
                               ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(children: [Text("Today Matches",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)]),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*.22,
-                //color: Colors.yellow,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: newmatchesdata!=null?newmatchesdata.length:0,
-                  itemBuilder: (BuildContext context,index){
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 7),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
+                            ),
+                          );
                         },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height*.22,
-                          width: MediaQuery.of(context).size.width*.36,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            //color: Colors.red,
-                          ),
-
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: MediaQuery.of(context).size.height*.14,
-                                      width: MediaQuery.of(context).size.width*.36,
-                                      //color: Colors.red,
-                                      child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
-                                  ),
-                                  SizedBox(height: 2,),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
-                                  )
-                                ],
-                              ),
-
-                            ),
-                          ),
-                        ),
                       ),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(children: [Text("All Matches",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)]),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*.22,
-                //color: Colors.yellow,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: newmatchesdata!=null?newmatchesdata.length:0,
-                  itemBuilder: (BuildContext context,index){
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 7),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
+                    ):Container(),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(children: [todaymatchesdata!=null?Text("Today Matches",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),):Text("")]),
+                    ),
+                    todaymatchesdata!=null?Container(
+                      height: MediaQuery.of(context).size.height*.25,
+                      //color: Colors.yellow,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: newmatchesdata!=null?newmatchesdata.length:0,
+                        itemBuilder: (BuildContext context,index){
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 7),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
+                              },
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*.22,
+                                width: MediaQuery.of(context).size.width*.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  //color: Colors.red,
+                                ),
+
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            height: MediaQuery.of(context).size.height*.15,
+                                            width: MediaQuery.of(context).size.width*.4,
+                                            //color: Colors.red,
+                                            child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
+                                        ),
+                                        SizedBox(height: 2,),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
+                                        )
+                                      ],
+                                    ),
+
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
                         },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height*.22,
-                          width: MediaQuery.of(context).size.width*.36,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            //color: Colors.red,
-                          ),
-
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: MediaQuery.of(context).size.height*.14,
-                                      width: MediaQuery.of(context).size.width*.36,
-                                      //color: Colors.red,
-                                      child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
-                                  ),
-                                  SizedBox(height: 2,),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
-                                  )
-                                ],
-                              ),
-
-                            ),
-                          ),
-                        ),
                       ),
-                    );
-                  },
+                    ):Container(),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(children: [allmatchesdata!=null?Text("All Matches",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),):Text("")]),
+                    ),
+                    allmatchesdata!=null?Container(
+                      height: MediaQuery.of(context).size.height*.25,
+                      //color: Colors.yellow,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: newmatchesdata!=null?newmatchesdata.length:0,
+                        itemBuilder: (BuildContext context,index){
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 7),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context)=>MatchedPeopleDetails(newmatchesdata[index])));
+                              },
+                              child: Container(
+                                //height: MediaQuery.of(context).size.height*.22,
+                                width: MediaQuery.of(context).size.width*.4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  //color: Colors.red,
+                                ),
+
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            height: MediaQuery.of(context).size.height*.15,
+                                            width: MediaQuery.of(context).size.width*.4,
+                                            //color: Colors.red,
+                                            child:Image.memory(base64Decode(newmatchesdata[index]["profilepic"]),fit: BoxFit.cover,)
+                                        ),
+                                        SizedBox(height: 2,),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["first_name"]}".toUpperCase()+" "+"${newmatchesdata[index]["last_name"]}"[0].toUpperCase(),style: TextStyle(color: Colors.black,),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["height"]}",style: TextStyle(color: Colors.grey,),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text("${newmatchesdata[index]["city"]}",style: TextStyle(color: Colors.grey,),),
+                                        )
+                                      ],
+                                    ),
+
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ):Container(),
+                    SizedBox(height: 5,)
+                  ],
+                ):Container(
+                  height: 500,
+                  child: Center(
+                    child: CircularProgressIndicator(backgroundColor: Colors.red,
+                      valueColor: new AlwaysStoppedAnimation<Color>(Colors.yellow),strokeWidth: 5,),
+                  ),
                 ),
-              ),
-              SizedBox(height: 5,)
+              )
 
 
             ],
@@ -486,7 +503,7 @@ class _MyHomeState extends State<MyHome> {
     var data = jsonDecode(reponse.body.toString());
     print("DATA: ${data}");
     setState(() {
-      newmatchesdata=data;
+      todaymatchesdata=data;
     });
 
   }
@@ -505,7 +522,7 @@ class _MyHomeState extends State<MyHome> {
     var data = jsonDecode(reponse.body.toString());
     print("DATA: ${data}");
     setState(() {
-      newmatchesdata=data;
+      allmatchesdata=data;
     });
 
   }

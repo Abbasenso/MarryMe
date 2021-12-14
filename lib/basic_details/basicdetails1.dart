@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:convert';
 
 import 'package:f_matrimony/basic_details/imageupload.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Basicdetails1 extends StatefulWidget {
   //const Basicdetails1({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class Basicdetails1 extends StatefulWidget {
 }
 
 class _Basicdetails1State extends State<Basicdetails1> {
+  SharedPreferences sharedlogindata;
   final k1= GlobalKey<FormState>();
   final k2=GlobalKey<FormState>();
   final k3=GlobalKey<FormState>();
@@ -55,6 +58,7 @@ class _Basicdetails1State extends State<Basicdetails1> {
   String Radio_value="";
   String habit="";
   String hobby="";
+  String country="India";
 
 
 
@@ -139,7 +143,7 @@ class _Basicdetails1State extends State<Basicdetails1> {
                          currentStep: currentStep,
                        type: StepperType.vertical,
                        onStepContinue: (){
-                         if(k1.currentState!.validate()){
+                         if(k1.currentState.validate()){
                            currentStep < 2 ?
                            setState(() => currentStep += 1):StepState.disabled;
                          }
@@ -159,8 +163,8 @@ class _Basicdetails1State extends State<Basicdetails1> {
                     SizedBox(height: 20,),
 
                     GestureDetector(
-                      onTap: (){
-                        if(k1.currentState!.validate()&& k2.currentState!.validate()&& k3.currentState!.validate()){
+                      onTap: ()async{
+                        if(k1.currentState.validate()&& k2.currentState.validate()&& k3.currentState.validate()){
                           detailSubmit();
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder:
@@ -168,6 +172,23 @@ class _Basicdetails1State extends State<Basicdetails1> {
                                   imageUpload(widget.uid)
                               )
                           );
+                          sharedlogindata=await SharedPreferences.getInstance();
+                          sharedlogindata.setString("country", "$country");
+                          sharedlogindata.setString("state", "$state");
+                          sharedlogindata.setString("city", "$city");
+                          sharedlogindata.setString("residencystatus", "$residencystatus");
+                          sharedlogindata.setString("maritialstatus", "$marit");
+                          sharedlogindata.setString("havechildren", "$children");
+                          sharedlogindata.setString("noofchild", "$noofchildrean");
+                          sharedlogindata.setString("diet", "$diet");
+                          sharedlogindata.setString("height", "$height");
+                          sharedlogindata.setString("qualification", "$qualification");
+                          sharedlogindata.setString("collegename", "$collegename");
+                          sharedlogindata.setString("workwith", "$workwith");
+                          sharedlogindata.setString("profession", "$as");
+                          sharedlogindata.setString("professionaddress", "$profaddress");
+                          sharedlogindata.setString("annualincome", "$income");
+                          sharedlogindata.setString("bodytype", "$Radio_value");
 
 
                         }
@@ -284,9 +305,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  state = newValue!;
+                                  state = newValue;
                                   state1.text=newValue;
                                 });
                               },
@@ -366,9 +387,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  city = newValue!;
+                                  city = newValue;
                                   city1.text=newValue;
                                 });
                               },
@@ -447,9 +468,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  residencystatus = newValue!;
+                                  residencystatus = newValue;
                                   residency_status.text=newValue;
                                 });
                               },
@@ -528,9 +549,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  marit = newValue!;
+                                  marit = newValue;
                                   marit1.text=newValue;
                                 });
                               },
@@ -610,9 +631,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                                   elevation: 16,
                                   style: const TextStyle(color: Colors.black),
                                   underline: Container(color: Colors.white,),
-                                  onChanged: (String? newValue) {
+                                  onChanged: (String newValue) {
                                     setState(() {
-                                      children = newValue!;
+                                      children = newValue;
                                       children1.text=newValue;
                                     });
                                   },
@@ -691,9 +712,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                                   elevation: 16,
                                   style: const TextStyle(color: Colors.black),
                                   underline: Container(color: Colors.white,),
-                                  onChanged: (String? newValue) {
+                                  onChanged: (String newValue) {
                                     setState(() {
-                                      noofchildrean = newValue!;
+                                      noofchildrean = newValue;
                                       no_of_childrean.text=newValue;
                                     });
                                   },
@@ -770,9 +791,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  diet = newValue!;
+                                  diet = newValue;
                                   diet1.text=newValue;
                                 });
                               },
@@ -924,9 +945,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  height = newValue!;
+                                  height = newValue;
                                   height1.text=newValue;
                                 });
                               },
@@ -1038,9 +1059,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  qualification = newValue!;
+                                  qualification = newValue;
                                   qualification1.text=newValue;
                                 });
                               },
@@ -1163,9 +1184,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  workwith = newValue!;
+                                  workwith = newValue;
                                   work_with.text=newValue;
                                 });
                               },
@@ -1246,9 +1267,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                                   //isDense: true,
                                   style: const TextStyle(color: Colors.black),
                                   underline: Container(color: Colors.white,),
-                                  onChanged: (String? newValue) {
+                                  onChanged: (String newValue) {
                                     setState(() {
-                                      as = newValue!;
+                                      as = newValue;
                                       as1.text=newValue;
                                     });
                                   },
@@ -1391,9 +1412,9 @@ class _Basicdetails1State extends State<Basicdetails1> {
                               elevation: 16,
                               style: const TextStyle(color: Colors.black),
                               underline: Container(color: Colors.white,),
-                              onChanged: (String? newValue) {
+                              onChanged: (String newValue) {
                                 setState(() {
-                                  income = newValue!;
+                                  income = newValue;
                                   income1.text=newValue;
                                 });
                               },
@@ -1638,7 +1659,7 @@ class _Basicdetails1State extends State<Basicdetails1> {
     Map mapeddata ={
       'user_id':"$mapuserid",
       'email':"$mapemail",
-      'country':"India",
+      'country':"$country",
       'state':"$state",
       'city':"$city",
       'residency':"$residencystatus",

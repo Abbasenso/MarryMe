@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:convert';
 
 import 'package:f_matrimony/basic_details/basicdetails1.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 class OTP extends StatefulWidget {
   String spid="";
   String profor="";
@@ -44,6 +45,7 @@ class OTP extends StatefulWidget {
 }
 
 class _OTPState extends State<OTP> {
+  SharedPreferences sharedlogindata;
   TextEditingController otp=TextEditingController();
   String putedCode="";
 
@@ -199,8 +201,11 @@ class _OTPState extends State<OTP> {
               Text("Resend",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
               GestureDetector(
-                onTap: (){
+                onTap: ()async{
                   if(widget.rand.toString()==widget.rand.toString()){
+                    await createUserid();
+                    await setDuration();
+                    await RegistrationUser();
                     final snackbar2=new SnackBar(
                       backgroundColor: Colors.black,
                       duration: Duration(seconds: 2),
@@ -209,18 +214,26 @@ class _OTPState extends State<OTP> {
                       action: SnackBarAction(
                         label: "Done",
                         textColor: Colors.green,
-                        onPressed: (){
-
-                        },
                       ),
-
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackbar2);
-                    createUserid();
-                    setDuration();
-                    print(duration);
-                    RegistrationUser();
                     Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>Basicdetails1(uid,widget.email,widget.fn,widget.ln,widget.re,widget.com)));
+                    setState(() async {
+                      sharedlogindata=await SharedPreferences.getInstance();
+                      sharedlogindata.setString("userid", "$uid");
+                      sharedlogindata.setString("firstname", "${widget.fn}");
+                      sharedlogindata.setString("lastname", "${widget.ln}");
+                      sharedlogindata.setString("gender", "${widget.gn}");
+                      sharedlogindata.setString("religion", "${widget.re}");
+                      sharedlogindata.setString("community", "${widget.com}");
+                      sharedlogindata.setString("emailid", "${widget.email}");
+                      sharedlogindata.setString("mobileno", "${widget.mobile}");
+                      sharedlogindata.setString("dob", "${widget.dt} ${widget.mon} ${widget.ye}");
+                      sharedlogindata.setString("duration", "$duration");
+                      sharedlogindata.setString("status", "1");
+                      sharedlogindata.setString("username", "${widget.uname}");
+                      sharedlogindata.setString("password", "${widget.pass}");
+                    });
                   }
                   else{
                      final snackbar1 =new  SnackBar(

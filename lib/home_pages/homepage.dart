@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int cart=0;
-  int selected_page=1;
+  int selected_page=0;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             //backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.group),
+            icon: const Icon(Icons.wc),
             label: "Matches",
             //backgroundColor: Colors.black
           ),

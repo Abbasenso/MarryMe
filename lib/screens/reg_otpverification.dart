@@ -157,8 +157,8 @@ class _OTPState extends State<OTP> {
               ),
               Text("Verification Code",style: TextStyle(fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
-              Text("Please type the Verification Code",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),),
-              Text("send to +91${widget.mobile}",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),),
+             // Text("Please type the Verification Code",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),),
+              //Text("send to +91${widget.mobile}",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),),
 
               Container(
                 height: MediaQuery.of(context).size.height*.3,
@@ -214,6 +214,9 @@ class _OTPState extends State<OTP> {
                       action: SnackBarAction(
                         label: "Done",
                         textColor: Colors.green,
+                        onPressed: (){
+
+                        },
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackbar2);

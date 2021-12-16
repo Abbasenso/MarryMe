@@ -240,7 +240,7 @@ class _FinalLoginState extends State<FinalLogin> {
   // }
   // }
 
-   login()async{
+   userlogin()async{
     if(userdata.isNotEmpty){
       if(!userdata[0].containsKey("city")|| !userdata[0].containsKey("profilepic")){
         sharedlogindata=await SharedPreferences.getInstance();
@@ -664,10 +664,10 @@ class _FinalLoginState extends State<FinalLogin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Login with OTP",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
-                  Text("Forgot password",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
-                ],
+               // children: [
+                 // Text("Login with OTP",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
+                 // Text("Forgot password",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 12),),
+              //  ],
               ),
             ),
             SizedBox(height: 15,),
@@ -676,7 +676,7 @@ class _FinalLoginState extends State<FinalLogin> {
                if(k1.currentState.validate()){
                  await sendusernamepassword();
                  //await userLogin(logindata);
-                 await login();
+                 await userlogin();
                  showSnackbar();
                }
                return null;

@@ -333,13 +333,13 @@ class _SplashScreenState extends State<SplashScreen>{
             //   colors: colorizeColors,
             // ),
             WavyAnimatedText(
-                ("Vivah.com"),
+                ("MarryMe"),
               textStyle:colorizeTextStyle,
               //speed: Duration(milliseconds: 250),
               //textAlign: TextAlign.center
             ),
             ColorizeAnimatedText(
-              ('Vivah.com'),
+              ('MarryMe'),
               textStyle: colorizeTextStyle,
               colors: colorizeColors,
               speed: Duration(milliseconds: 500)

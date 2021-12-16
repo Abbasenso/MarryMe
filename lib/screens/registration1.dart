@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:f_matrimony/basic_details/basicdetails1.dart';
 import 'package:f_matrimony/screens/reg_otpverification.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_otp/flutter_otp.dart';
+//import 'package:flutter_otp/flutter_otp.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:http/http.dart' as http;
 
@@ -86,7 +86,7 @@ class _Registration1State extends State<Registration1> {
   }
   var logindata=[];
   dynamic fetchData() async {
-    final url="https://feonnaaherbals.com/vibaha_backend/registrationdatafetch.php";
+    final url="https://marryme.world/vibaha_backend/registrationdatafetch.php";
     var _userData=[];
     try {
       final response = await http.get(Uri.parse(url));
@@ -929,11 +929,11 @@ class _Registration1State extends State<Registration1> {
                   ),
                   onTap: (){
                     if(k1.currentState.validate()){
-                      FlutterOtp otp=FlutterOtp();
-                      otp.sendOtp(mobile, "Dear $fname your F-Shaadi OTP is $rand.Please don't share anyone",
-                          minNumber, maxNumber, ccode);
-                      final signature=  SmsAutoFill().getAppSignature;
-                      print(signature);
+                      // FlutterOtp otp=FlutterOtp();
+                      // otp.sendOtp(mobile, "Dear $fname your F-Shaadi OTP is $rand.Please don't share anyone",
+                      //     minNumber, maxNumber, ccode);
+                      // final signature=  SmsAutoFill().getAppSignature;
+                      // print(signature);
 
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)
                         =>OTP(sponsorid,profilefor,fname,lname,gender,religion,community,emailid,mobile,date,month,year,rand,username,password)

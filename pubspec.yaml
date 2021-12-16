@@ -32,7 +32,6 @@ dependencies:
   carousel_pro: any
   pin_input_text_field: ^4.1.1
   sms_autofill: any
-  flutter_otp: ^0.3.2
   image_picker: ^0.8.4+4
   http: any
   animated_text_kit: ^4.2.1

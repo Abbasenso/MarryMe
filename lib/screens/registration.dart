@@ -52,7 +52,7 @@ class _RegistrationState extends State<Registration> {
   }
   var logindata=[];
   dynamic fetchData() async {
-    final url="https://feonnaaherbals.com/vibaha_backend/registrationdatafetch.php";
+    final url="https://marryme.world/vibaha_backend/registrationdatafetch.php";
     var _userData=[];
     try {
       final response = await http.get(Uri.parse(url));
